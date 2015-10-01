@@ -13,10 +13,10 @@ package object petrovich {
   private val ComplexNameDelimiter = "-"
   
   type Person = List[PersonPart]
-  
+
   private def inflect(gender: Gender, namePart: NamePart, gcase: Case): NamePart = {
     namePart transform { s ⇒
-      val ruleSets: RuleSets = rules.rulesByNamePartType(namePart.tpe)
+      val ruleSets: RuleSets = rules.ruleSetsByNamePartType(namePart.tpe)
       if (s.contains(ComplexNameDelimiter)) {
         // This is a complex name
         val complexNameParts = s.split('-').toList
@@ -33,7 +33,7 @@ package object petrovich {
     }
   }
 
-  def apply(person: Person, gcase: Case): Person = {
+  def petrovich(person: Person, gcase: Case): Person = {
     val gender = person.gender
     // look over possible names of properties,
     // inflect them and add to result object
