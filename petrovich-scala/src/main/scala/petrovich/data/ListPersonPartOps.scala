@@ -40,4 +40,28 @@ final class ListPersonPartOps(val self: List[PersonPart]) extends AnyVal {
     }
   }
 
+  def firstLast: String = {
+    Seq(first, last).
+      flatten.
+      mkString(" ")
+  }
+
+  def lastFirst: String = {
+    Seq(last, first).
+      flatten.
+      mkString(" ")
+  }
+
+  def lastFirstMiddle: String = {
+    Seq(last, first, middle).
+      flatten.
+      mkString(" ")
+  }
+
+  def firstMiddleLast: String = {
+    Seq(first, middle, last).
+      flatten.
+      mkString(" ")
+  }
+
 }
