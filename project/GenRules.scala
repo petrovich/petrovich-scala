@@ -76,7 +76,6 @@ object GenRules extends (File ⇒ Seq[File]) {
         case _ ⇒ fail("Invalid rules file")
       }
     }
-    println(json)
     val ruleSetsByNamePartType = json map {
       case ("lastname", v) ⇒
         val rs = readJs[RuleSets](v)

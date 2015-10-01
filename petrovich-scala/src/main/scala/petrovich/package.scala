@@ -13,7 +13,12 @@ package object petrovich {
   private val ComplexNameDelimiter = "-"
   
   type Person = List[PersonPart]
-
+  val FirstName = data.PersonPart.FirstName
+  val LastName = data.PersonPart.LastName
+  val MiddleName = data.PersonPart.MiddleName
+  val Gender = data.PersonPart.Gender
+  val Case = data.Case
+  
   private def inflect(gender: Gender, namePart: NamePart, gcase: Case): NamePart = {
     namePart transform { s ⇒
       val ruleSets: RuleSets = rules.ruleSetsByNamePartType(namePart.tpe)

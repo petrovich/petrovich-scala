@@ -1,6 +1,8 @@
 package petrovich.data
 
-sealed trait PersonPart
+sealed trait PersonPart {
+  def ::(x: PersonPart): List[PersonPart] = List(x, this)
+}
 
 object PersonPart {
 

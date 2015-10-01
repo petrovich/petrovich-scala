@@ -40,7 +40,7 @@ object Rule {
     def search(gender: Gender, name: String, matchWholeWord: Boolean, tags: Tags): Option[Rule] = {
       @tailrec def rec(tl: RuleSet): Option[Rule] = tl match {
         case Nil ⇒ None
-        case rule :: xs if tags.intersect(rule.tags).isEmpty ⇒ rec(xs)
+        case rule :: xs if tags.diff(rule.tags).nonEmpty ⇒ rec(xs)
         case rule :: xs if rule.gender != Gender.Androgynous && gender != rule.gender ⇒ rec(xs)
         case rule :: xs ⇒
           val s = name.toLowerCase
@@ -49,7 +49,7 @@ object Rule {
             else s.substring(s.length - sample.length) == sample            
           }
           if (rule.test.exists(matchSample)) Some(rule)
-          else None
+          else rec(xs)
       }
       rec(self)
     }

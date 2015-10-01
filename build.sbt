@@ -45,15 +45,15 @@ val commonSettings = publishSettings ++ Seq(
   )
 )
 
-lazy val petrovich = (crossProject.crossType(CrossType.Pure) in file(".")).
+lazy val `petrovich-scala` = crossProject.crossType(CrossType.Pure).
   settings(commonSettings: _*).
   settings(
     normalizedName := "petrovich-scala",
     sourceGenerators in Compile <+= sourceManaged in Compile map GenRules
   )
 
-lazy val petrovichJS = petrovich.js
-lazy val petrovichJVM = petrovich.jvm
+lazy val petrovichJS = `petrovich-scala`.js
+lazy val petrovichJVM = `petrovich-scala`.jvm
 
 publishTo := Some(Resolver.file("Unused transient repository", file("target/unusedrepo")))
 
