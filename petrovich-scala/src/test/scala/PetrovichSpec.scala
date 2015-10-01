@@ -4,7 +4,7 @@ import petrovich._
 class PetrovichSpec extends FlatSpec with Matchers {
 
   "Petrovich" should "detect female" in {
-    val person = FirstName("Светлана") :: MiddleName("Андреевна")  
+    val person = FirstName("Светлана") :: MiddleName("Андреевна")
     person.gender shouldEqual Gender.Female
   }
 
@@ -18,10 +18,21 @@ class PetrovichSpec extends FlatSpec with Matchers {
     val personG = LastName("Фомкина") :: FirstName("Алексея") :: MiddleName("Юрьевича")
     assert(petrovich(personN, Case.Genitive).intersect(personG) == personG)
   }
-  
+
   it should "convert complex names to dative case" in {
     val personN = LastName("Бонч-Бруевич") :: FirstName("Виктор") :: MiddleName("Леопольдович")
     val personD = LastName("Бонч-Бруевичу") :: FirstName("Виктору") :: MiddleName("Леопольдовичу")
     assert(petrovich(personN, Case.Dative).intersect(personD) == personD)
+  }
+
+  it should "convert name via alternative syntax" in {
+    val expr = petrovich.
+      male.
+      first("Лев").
+      last("Щаранский").
+      prepositional.
+      firstLast
+
+    assert(expr == "Льве Щаранском")
   }
 }
