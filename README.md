@@ -9,13 +9,13 @@
 Для начала просто добавить библиотеку в зависимости вашего проекта
 
 ```scala
-libraryDependencies += "com.github.fomkin" %% "petrovich-scala" % "0.1.0"
+libraryDependencies += "com.github.fomkin" %% "petrovich-scala" % "0.1.1"
 ```
 
 В случае Scala.js зависимость следует указывать так
 
 ```scala
-libraryDependencies += "com.github.fomkin" %%% "petrovich-scala" % "0.1.0"
+libraryDependencies += "com.github.fomkin" %%% "petrovich-scala" % "0.1.1"
 ```
 
 Теперь Петрович готов к работе. Давайте напишем немного кода.
