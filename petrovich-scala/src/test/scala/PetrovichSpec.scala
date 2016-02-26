@@ -19,6 +19,12 @@ class PetrovichSpec extends FlatSpec with Matchers {
     assert(petrovich(personN, Case.Genitive).intersect(personG) == personG)
   }
 
+  it should "convert complex names to genitive case" in {
+    val personN = LastName("Ткач") :: FirstName("Антон") :: MiddleName("Вячеславович")
+    val personD = LastName("Ткача") :: FirstName("Антона") :: MiddleName("Вячеславовича")
+    assert(petrovich(personN, Case.Genitive).intersect(personD) == personD)
+  }
+
   it should "convert complex names to dative case" in {
     val personN = LastName("Бонч-Бруевич") :: FirstName("Виктор") :: MiddleName("Леопольдович")
     val personD = LastName("Бонч-Бруевичу") :: FirstName("Виктору") :: MiddleName("Леопольдовичу")

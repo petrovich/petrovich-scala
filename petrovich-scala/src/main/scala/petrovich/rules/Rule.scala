@@ -45,8 +45,13 @@ object Rule {
         case rule :: xs ⇒
           val s = name.toLowerCase
           def matchSample(sample: String): Boolean = {
-            if (matchWholeWord) s == sample
-            else s.substring(s.length - sample.length) == sample            
+            if (matchWholeWord) {
+              s == sample
+            } else if (s.length > sample.length) {
+              s.substring(s.length - sample.length) == sample
+            } else {
+              false
+            }
           }
           if (rule.test.exists(matchSample)) Some(rule)
           else rec(xs)
