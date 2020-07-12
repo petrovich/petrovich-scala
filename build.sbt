@@ -30,12 +30,16 @@ val publishSettings = Seq(
   }
 )
 
+lazy val scala213 = "2.13.2"
+lazy val scala212 = "2.12.11"
+lazy val supportedScalaVersions = List(scala213, scala212)
 
 val commonSettings = publishSettings ++ Seq(
-  scalaVersion := "2.11.7",
+  scalaVersion := crossScalaVersions.value.head,
+  crossScalaVersions := supportedScalaVersions,
   organization := "com.github.fomkin",
   version := "0.2.0-SNAPSHOT",
-  libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0-M7" % "test",
+  libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.0" % Test,
   scalacOptions ++= Seq(
     "-deprecation",
     "-feature",
@@ -45,11 +49,11 @@ val commonSettings = publishSettings ++ Seq(
   )
 )
 
-lazy val `petrovich-scala` = crossProject.crossType(CrossType.Pure).
+lazy val `petrovich-scala` = crossProject(JSPlatform, JVMPlatform).
   settings(commonSettings: _*).
   settings(
     normalizedName := "petrovich-scala",
-    sourceGenerators in Compile <+= sourceManaged in Compile map GenRules
+    sourceGenerators in Compile += sourceManaged in Compile map GenRules
   )
 
 lazy val petrovichJS = `petrovich-scala`.js

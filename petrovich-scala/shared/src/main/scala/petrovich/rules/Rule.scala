@@ -12,15 +12,15 @@ case class Rule(gender: Gender, test: List[String], mods: Seq[String], tags: Tag
    * Apply found rule to given name 
    */
   def apply(name: String, gcase: Case): String = gcase match {
-    case Case.Nominative ⇒ name
-    case _ ⇒
+    case Case.Nominative => name
+    case _ =>
       @tailrec def rec(s: String, tl: List[Char]): String = tl match {
-        case Nil ⇒ s
-        case Rule.Dot :: _ ⇒ s
-        case Rule.Dash :: xs ⇒ rec(s.substring(0, s.length - 1), xs)
-        case x :: xs ⇒ rec(s + x, xs)
+        case Nil => s
+        case Rule.Dot :: _ => s
+        case Rule.Dash :: xs => rec(s.substring(0, s.length - 1), xs)
+        case x :: xs => rec(s + x, xs)
       }
-      rec(name, mods(gcase.index).to[List])
+      rec(name, mods(gcase.index).toList)
   }
 }
 
@@ -37,12 +37,12 @@ object Rule {
     /**
      * Local search in rulesets of exceptions or suffixes
      */
-    def search(gender: Gender, name: String, matchWholeWord: Boolean, tags: Tags): Option[Rule] = {
+    def searchRule(gender: Gender, name: String, matchWholeWord: Boolean, tags: Tags): Option[Rule] = {
       @tailrec def rec(tl: RuleSet): Option[Rule] = tl match {
-        case Nil ⇒ None
-        case rule :: xs if tags.diff(rule.tags).nonEmpty ⇒ rec(xs)
-        case rule :: xs if rule.gender != Gender.Androgynous && gender != rule.gender ⇒ rec(xs)
-        case rule :: xs ⇒
+        case Nil => None
+        case rule :: xs if tags.diff(rule.tags).nonEmpty => rec(xs)
+        case rule :: xs if rule.gender != Gender.Androgynous && gender != rule.gender => rec(xs)
+        case rule :: xs =>
           val s = name.toLowerCase
           def matchSample(sample: String): Boolean = {
             if (matchWholeWord) {
