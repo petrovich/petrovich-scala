@@ -29,32 +29,32 @@ package object petrovich {
   implicit class PersonOps(val self: Person) extends AnyVal {
 
     def nameParts: List[NamePart] = self collect {
-      case x: NamePart ⇒ x
+      case x: NamePart => x
     }
 
     def first: Option[String] = {
-      val xs = self collect { case FirstName(value) ⇒ value }
+      val xs = self collect { case FirstName(value) => value }
       xs.headOption
     }
 
     def middle: Option[String] = {
-      val xs = self collect { case MiddleName(value) ⇒ value }
+      val xs = self collect { case MiddleName(value) => value }
       xs.headOption
     }
 
     def last: Option[String] = {
-      val xs = self collect { case LastName(value) ⇒ value }
+      val xs = self collect { case LastName(value) => value }
       xs.headOption
     }
 
     def gender: Gender = {
-      val xs = self collect { case value: Gender ⇒ value }
+      val xs = self collect { case value: Gender => value }
       xs.headOption getOrElse {
         def cantDetectGender = new PetrovichException("Can't detect gender")
         middle.getOrElse(throw cantDetectGender).toLowerCase match {
-          case s if s.endsWith("ич") ⇒ Gender.Male
-          case s if s.endsWith("на") ⇒ Gender.Female
-          case _ ⇒ Gender.Androgynous
+          case s if s.endsWith("ич") => Gender.Male
+          case s if s.endsWith("на") => Gender.Female
+          case _ => Gender.Androgynous
         }
       }
     }
@@ -63,7 +63,7 @@ package object petrovich {
       // look over possible names of properties,
       // inflect them and add to result object
       gender :: {
-        for (namePart ← nameParts)
+        for (namePart <- nameParts)
           yield namePart.inflect(gender, gcase)
       }
     }

@@ -1,7 +1,8 @@
-import org.scalatest._
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 import petrovich._
 
-class PetrovichSpec extends FlatSpec with Matchers {
+class PetrovichSpec extends AnyFlatSpec with Matchers {
 
   "Petrovich" should "detect female" in {
     val person = FirstName("Светлана") :: MiddleName("Андреевна")
